@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     EditText edit;
     ListView listTasks;
     ArrayAdapter<String> adapter = null;
-    String url = "http://127.0.0.1/apiTasks/";
+    String url = "http://10.0.2.2:80/apiTasks/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         myapi api = retrofit.create(myapi.class);
 
         Call<List<Task>> call = api.getalltasks( );
-        System.out.println(call);
+
         call.enqueue(new Callback<List<Task>>( ) {
             @Override
             public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
