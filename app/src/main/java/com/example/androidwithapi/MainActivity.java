@@ -48,9 +48,10 @@ public class MainActivity extends AppCompatActivity {
         btnAdd = findViewById(R.id.addButton);
         edit = findViewById(R.id.editTask);
 
-
+        //load the data
         loadData();
 
+        //Add task action
         btnAdd.setOnClickListener(new View.OnClickListener( ) {
             @Override
             public void onClick(View v) {
@@ -74,7 +75,10 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show( );
                     }
                 });
+                //empty the textField
                 edit.setText("");
+
+                //reload the data again from API
                 loadData();
             }
         });
