@@ -49,24 +49,7 @@ public class MainActivity extends AppCompatActivity {
         edit = findViewById(R.id.editTask);
 
 
-        Retrofit retrofit = new Retrofit.Builder( ).baseUrl(url).addConverterFactory(GsonConverterFactory.create( )).build( );
-        myapi api = retrofit.create(myapi.class);
-
-        Call<List<Task>> call = api.getalltasks( );
-
-        call.enqueue(new Callback<List<Task>>( ) {
-            @Override
-            public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
-                List<Task> data = response.body( );
-                adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, Listin(data));
-                listTasks.setAdapter(adapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<Task>> call, Throwable t) {
-
-            }
-        });
+        loadData();
 
         btnAdd.setOnClickListener(new View.OnClickListener( ) {
             @Override
@@ -91,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show( );
                     }
                 });
+                edit.setText("");
+                loadData();
             }
         });
 
@@ -99,6 +84,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void loadData(){
+        Retrofit retrofit = new Retrofit.Builder( ).baseUrl(url).addConverterFactory(GsonConverterFactory.create( )).build( );
+        myapi api = retrofit.create(myapi.class);
+
+        Call<List<Task>> call = api.getalltasks( );
+
+        call.enqueue(new Callback<List<Task>>( ) {
+            @Override
+            public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
+                List<Task> data = response.body( );
+                adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, Listin(data));
+                listTasks.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Task>> call, Throwable t) {
+
+            }
+        });
+    }
     ArrayList Listin(List<Task> l) {
         ArrayList<String> maliste = new ArrayList<>( );
         for (int i = 0; i < l.size( ); i++) {
